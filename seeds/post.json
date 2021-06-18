@@ -1,0 +1,27 @@
+[
+    {
+        "post_title": "Post 1",
+        "post_content": "Post 1 comments about new application 1",
+        "user_id": 3
+    },
+    {
+        "post_title": "Post 2",
+        "post_content": "Post 2 comments about new application 2",
+        "user_id": 1
+    },
+    {
+        "post_title": "Post 3",
+        "post_content": "Post 3 comments about new application 3",
+        "user_id": 2
+    },
+    {
+        "post_title": "Post 4",
+        "post_content": "Post 4 comments about new application 4",
+        "user_id": 5
+    },
+    {
+        "post_title": "Post 5",
+        "post_content": "Post 5 comments about new application 5",
+        "user_id": 4
+    }
+]
