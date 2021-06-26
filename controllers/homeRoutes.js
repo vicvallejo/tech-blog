@@ -16,7 +16,11 @@ router.get('/', async (req, res) => {
     );
     const posts = postData.map((post) => post.get({ plain: true }));
   console.log(posts);
-    res.render('homepage', { posts, loggedIn: req.session.loggedIn });
+  res.render('homepage', { 
+    posts, 
+    logged_in: req.session.logged_in 
+  });
+   
   } catch (err) {
     console.log(err)
     res.status(500).json(err);
@@ -25,18 +29,21 @@ router.get('/', async (req, res) => {
 
 router.get('/login', (req, res) => {
   if (req.session.logged_in) {
-    res.redirect('/login');
+    res.redirect('/');
     return;
   }
-
   res.render('login');
 });
 
 router.get('/signup', (req, res) => {
-  res.render('signup');
+  if (req.session.logged_in) {
+    res.redirect('/');
+    return;
+  }
+  res.render('login');
 });
 
-router.get('/post/:id', async (req, res) => {
+router.get('/post/:id',   async (req, res) => {
   try {
     const postData = await Post.findOne(
       {
@@ -63,7 +70,7 @@ router.get('/post/:id', async (req, res) => {
   
 
      
-router.get('/posts-comments', async (req, res) => {
+router.get('/posts-comments',   async (req, res) => {
   try {
     const postData = await Post.findOne(
       {

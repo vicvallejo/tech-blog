@@ -14,7 +14,7 @@ router.get('/', withAuth, async (req, res) => {
         });
         const posts = postData.map((post) => post.get({ plain: true }));
         console.log(posts);
-        res.render('dashboard', { posts, loggedIn: req.session.loggedIn });
+        res.render('/dashboard', { posts, logged_in: req.session.logged_in });
     } catch (err) {
         console.log(err)
         res.status(500).json(err);
@@ -37,7 +37,7 @@ try {
         return;
     }
     const post = postData.get({ plain: true });
-    res.render('edit-post', { post, loggedIn: true });
+    res.render('edit-post', { post, logged_in: req.session.logged_in});
 } 
 catch (err) {
     console.log(err)

@@ -13,16 +13,17 @@
       <header class="hero">
           <div>
             <nav class"nav">
-                    <a class="link" href="/">Home</a>
-                    <a class="link" href="/dashboard">Dashboard</a>
-                    {{#if loggedIn}}
-                    <a class="link" href="/" id="logout">Logout</a>
+               <ul class="navbar">
+                    {{#if logged_in}}
+                      <li><a class="link" href="/dashboard">Dashboard</a></li>
+                      <li><button class="no-button" id="logoutbtn">Logout</button></li>
                     {{else}}
-                    <a class="link" href="/login">Login</a>
+                      <li><a class="link" href="/">Home</a></li>
+                     <li><a href="/login">Login</a></li>
                     {{/if}}
-                </nav>          
+                  </ul>  
+                  </nav>        
           </div>
-
           <h1 class="app-title"><i class="fab "></i>The Tech Blog</h1>
       </header>
 
@@ -30,11 +31,8 @@
       {{{ body }}}
     </main>
   </div>
-
-    {{#if loggedIn}}
+    {{#if logged_in}}
     <script src="/js/logout.js"></script>
     {{/if}}
-
 </body>
-
 </html>
