@@ -59,13 +59,15 @@ res.status(200).json(postData);
   }
 });
  
-router.put('/:id', withAuth, (req, res) => {
+
+
+router.put('/edit', withAuth, (req, res) => {
     Post.update({
         post_title: req.body.title,
         post_content: req.body.content
     }, {
         where: {
-            post_id: req.params.id
+            post_id: req.body.id
         }
     }).then(postData => {
         if (!postData) {
@@ -80,11 +82,11 @@ router.put('/:id', withAuth, (req, res) => {
     }); 
 });
 
-router.delete('/:id', withAuth, async (req, res) => {
+router.delete('/delete', withAuth, async (req, res) => {
   try {
     const postData = await Post.destroy({
       where: {
-     post_id: req.params.id
+     post_id: req.body.id
       }
     });
     if (!postData) {
@@ -94,6 +96,7 @@ router.delete('/:id', withAuth, async (req, res) => {
     res.status(200).json(postData);
   } catch (err) {
     res.status(500).json(err);
+    console.log(err);
   }
 });
 

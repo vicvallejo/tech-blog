@@ -43,7 +43,7 @@ router.get('/signup', (req, res) => {
   res.render('login');
 });
 
-router.get('/post/:id',   async (req, res) => {
+router.get('/posts/:id',  withAuth, async (req, res) => {
   try {
     const postData = await Post.findOne(
       {
@@ -61,7 +61,7 @@ router.get('/post/:id',   async (req, res) => {
 
   const post = postData.get({ plain: true });
   console.log(post);
-  res.render('single-post', { post, loggedIn: req.session.loggedIn });
+  res.render('singlepost', { post  });
   } catch (err) {
     console.log(err)
     res.status(500).json(err);
@@ -70,7 +70,7 @@ router.get('/post/:id',   async (req, res) => {
   
 
      
-router.get('/posts-comments',   async (req, res) => {
+router.get('/postscomments',   async (req, res) => {
   try {
     const postData = await Post.findOne(
       {

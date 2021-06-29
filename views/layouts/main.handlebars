@@ -15,11 +15,11 @@
             <nav class"nav">
                <ul class="navbar">
                     {{#if logged_in}}
+                      <li><a class="link" href="/">Home</a></li>
                       <li><a class="link" href="/dashboard">Dashboard</a></li>
                       <li><button class="no-button" id="logoutbtn">Logout</button></li>
                     {{else}}
-                      <li><a class="link" href="/">Home</a></li>
-                     <li><a href="/login">Login</a></li>
+                      <li><a href="/login">Login</a></li>
                     {{/if}}
                   </ul>  
                   </nav>        

@@ -9,12 +9,19 @@ router.get('/', withAuth, async (req, res) => {
             where: { user_id: req.session.user_id },
             include: [
             { model: User, attributes: ['user_name'] },
-            { model: Comment  },
             ]
         });
+
+        const commentData = await Comment.findAll();
         const posts = postData.map((post) => post.get({ plain: true }));
+        const comments = commentData.map((comment) => comment.get({ plain: true }));
+
         console.log(posts);
-        res.render('/dashboard', { posts, logged_in: req.session.logged_in });
+        res.render('dashboard', {
+             posts,
+             comments,
+             logged_in: true
+             });
     } catch (err) {
         console.log(err)
         res.status(500).json(err);
@@ -24,31 +31,37 @@ router.get('/', withAuth, async (req, res) => {
 
 
 router.get('/edit/:id', withAuth, async (req, res) => {
-try {
-    const postData = await Post.findOne({
-        where: { post_id: req.params.id },
-        include: [{ model: User, attributes: ['user_name'] },
-        { model: Comment, attributes: ['comment_id', 'comment_text', 'post_id', 'user_id', 'created_at'],
-          include: { model: User, attributes: ['user_name'] }
-        }]
-    });
-    if (!postData) {
-        res.status(404).json({ message: 'No post found with this id' });
-        return;
+    try {
+        const postData = await Post.findOne({
+            where: { post_id: req.params.id },
+            include: [
+                   { model: User, attributes: ['user_name'] },
+            ]
+        });
+
+        const commentData = await Comment.findAll();
+        const post = postData.get({ plain: true });
+        const comments = commentData.map((comment) => comment.get({ plain: true }));
+
+        console.log(post);
+        res.render('editpost', {
+             post,
+             comments,
+            });
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(err);
     }
-    const post = postData.get({ plain: true });
-    res.render('edit-post', { post, logged_in: req.session.logged_in});
-} 
-catch (err) {
-    console.log(err)
-    res.status(500).json(err);
-}
 });
 
 
 
-router.get('/new', (req, res) => {
-    res.render('new-post');
+
+
+
+
+router.get('/newpost', (req, res) => {
+    res.render('newpost');
 });
 
 

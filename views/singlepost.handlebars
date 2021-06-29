@@ -1,7 +1,6 @@
 
 {{>postinfo post}}
 
-{{#if loggedIn}}
 <div class="card">
     <h3 class="card-header"></h3>
     <form class="card-body comment-form" id="comment-form">
@@ -9,13 +8,44 @@
         <label class="form-label">Comment</label>
         <input id="comment" name="comment-body" class="form-input" />
 
-        <button type="submit" class="btn">Submit</button>
+        <button type="submit" class="btn" id="comments_btn" value="{{post.post_id}}" onclick="commentFormHandler(event)">Submit</button>
     </form>
 </div>
-{{/if}}
 
-{{>comments post_content}}
 
-{{#if loggedIn}}
-<script src="/jss/comment.js"></script>
-{{/if}}
+
+{{>comments post.comments}}
+
+
+<script>
+async function commentFormHandler(event) {
+    event.preventDefault();
+
+    const comment_text = document.querySelector('#comment').value.trim();
+    const post_id = document.querySelector('#comments_btn').value;
+
+    if (comment_text) {
+        const response = await fetch('/api/comments/', {
+            method: 'POST',
+            body: JSON.stringify({
+                post_id,
+                comment_text
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            document.location.reload();
+
+        } else {
+            alert(response.statusText);
+            document.querySelector('#comment-form').style.display = "block";
+        }
+    }
+};
+
+
+
+</script>
